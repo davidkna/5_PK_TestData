@@ -16,17 +16,19 @@ for fileName in glob.iglob('*/*.csv'):
 	data = pd.io.parsers.read_csv(
 		fileName, names=["x", "y"], header=None)
 	save_path = os.getcwd() + "/" + fileName.replace(".csv", "") + '.png'
+	basename = os.path.basename(fileName)
 
 	fig = plt.figure()
 	ax = fig.add_subplot(111)
 
 	alpha = 0.1
-	if fileName.endswith("IS.csv"):
+	if basename.endswith("IS.csv") or basename.startswith("worstCase"):
 		alpha = 0.5
 
 	ax.scatter(x=data["x"], y=data["y"], s=1, lw = 0, alpha=alpha)
 
-	if os.path.basename(fileName).startswith('dist'):
+
+	if basename.startswith('dist'):
 		ax.set_xlabel("Wiederholungen")
 		ax.set_ylabel("Zeit in s")
 
